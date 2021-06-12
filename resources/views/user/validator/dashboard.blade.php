@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('user.layout.layout')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in Admin!') }}
+                    {{ __('You are logged in validator') }}
                 </div>
             </div>
         </div>

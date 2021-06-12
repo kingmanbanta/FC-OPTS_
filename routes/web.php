@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+
+Route::get('', function () {
     return view('welcome');
 });
 
@@ -21,4 +23,29 @@ Auth::routes(['register'=>false]);
 
 //Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function(){
+    Route::get('dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('adminDash');
+
+    Route::get('/manageAccount', [App\Http\Controllers\AdminController::class, 'manageAccount'])->name('manageAccount');
+    Route::get('/manageAccount/create', [App\Http\Controllers\AdminController::class, 'create'])->name('create');
+    Route::post('/manageAccount/create/save', [App\Http\Controllers\AdminController::class, 'createSave'])->name('createSave');
+    Route::get('/manageAccount/edit/{id}', [App\Http\Controllers\AdminController::class, 'getUserById'])->name('view');
+
+});
+Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function(){
+    Route::get('dashboard', [App\Http\Controllers\ProcessorController::class, 'index'])->name('processorDash');    
+});
+Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function(){
+    Route::get('dashboard', [App\Http\Controllers\ValidatorController::class, 'index'])->name('validatorDash');    
+});
+Route::group(['prefix'=>'approver/','middleware' =>['role:Approver']],function(){
+    Route::get('dashboard', [App\Http\Controllers\ApproverController::class, 'index'])->name('approverDash');    
+});
+Route::group(['prefix'=>'requestor/','middleware' =>['role:Requestor']],function(){
+    Route::get('dashboard', [App\Http\Controllers\RequestorController::class, 'index'])->name('requestorDash');    
+});
+
+
+
+
