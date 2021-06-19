@@ -43,15 +43,17 @@
                       </thead>
                       <tbody>
                           @foreach($users as $users)
-                          <tr role="row">
+                          <tr id ="uid"role="row">
                           <td class="class_id">{{$users->id}}</td>
                           <td class="class_name">{{$users->name}}</td>
-                          <td class="class_email">{{$users->email}}</td>
+                          <td class="class_email">{{$users->email}}</td>  
+                          <td style = "display:none" class="class_password">{{$users->password}}</td>                           
                           @foreach($users->roles as $role)
                           <td class="class_role">{{$role->display_name}}</td>
                           @endforeach
-                          <td>
-                                <a href="#"  class="btn btn-primary btn-sm editbtn"><i class="fa fa-edit"></i></a>
+                          <td>  
+                                <a href="#" class="btn btn-secondary btn-sm viewbtn"><i class="fa fa-info"></i></a>
+                                <a href="#" class="btn btn-primary btn-sm editbtn"><i class="fa fa-edit"></i></a>
                                 <a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                           </td>
                         </tr>
@@ -69,7 +71,8 @@
 
 
 @include('admin.manage.create')
-@include('admin.manage.edit')            
+@include('admin.manage.edit')  
+@include('admin.manage.view')            
 @endsection
 
 

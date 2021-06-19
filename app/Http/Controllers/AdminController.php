@@ -68,6 +68,25 @@ class AdminController extends Controller
         $users = User::findOrFail($id);
         return response()->json($users);
     }
+    
+    public function update(Request $request, $id)
+    {
+        $this->validate($request,[
+            'uname' => ['required', 'string', 'max:255'],
+            'uemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'upassword' => ['required', 'string', 'min:8', 'confirmed'],
+              
+        ]);
+        $users = User::find($id);
+        $users->name = $request->input('uname');
+        $users->email = $request->input('uemail');
+        $users->password =Hash::make($request['upassword']);
+        $users->save();
+
+    
+        //return response()->json($users);
+                        
+    }
       
 
     

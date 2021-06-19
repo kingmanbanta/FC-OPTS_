@@ -9,46 +9,44 @@
           <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-      <form id="userform">
+      <form id="editForm">
      {{csrf_field()}}
-        <input type="hidden" id="uid" name="id" />
-       
+     {{method_field('PUT')}}
+     <div class="form-group">
+        <input type="hidden" id="uid" name="uid" class="form-control" />
+          </div>
           <div class="form-group">
             <label>Name</label>
-              <input type="text" name="name" id="uname" class="form-control">
+              <input type="text" name="uname" id="uname" class="form-control">
           </div>
             <div class="form-group">
               <label >Email</label>
-                <input type="email" name="email" id="uemail" class="form-control">
+                <input type="email" name="uemail" id="uemail" class="form-control">
             </div>
+            <div class="form-group">    
+                  <label for="urole">Current Role:</label>
+                  <input id="urole" type="text" class="form-control " name="urole" readonly>       
+                      </div>
+            <div class="form-group">    
+                  <label for="nurole">Update To:</label>
+                            <select id="role_id" name="role_id"  class="form-control">
+                              @foreach($roles as $role)
+                                <option value="{{$role->id}}">{{$role->display_name}}</option>
+                              @endforeach
+                            </select>
+                      </div>
                 
                         <div class="modal-footer">
                           <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          <button type="submit" class="btn btn-primary ">Save changes</button>
                         </div>
         </div>
         </form>                  
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
-   $('.editbtn').on('click',function(){
-    $('#userEditModal').modal('show');
-     let $row = $(this).closest("tr");
-     let $text = $row.find(".class_id").text();
-
-     console.log($text);
-     document.querySelector('#uid').value = $text;
-     document.querySelector('#uname').value = $text;
-     document.querySelector('#uemail').value = $text;
-     
-   });
-
-</script>
-
-
-
-<!--<script type="text/javascript">
     $().ready(function(){
       $('.editbtn').on('click',function(){
         $('#userEditModal').modal('show');
@@ -61,34 +59,43 @@
 
         console.log(data);
 
-        $('#id').val(data[0]);
-        $('#name').val(data[1]);
-        $('#email').val(data[2]);
-
+        $('#uid').val(data[0]);
+        $('#uname').val(data[1]);
+        $('#uemail').val(data[2]);
+        $('#urole').val(data[4]);
       });
     });
-  </script>-->
+</script>
+
+<script type="text/javascript">
+$().ready(function(){
   
-  <!--<script type="text/javascript">      
-        $(document).ready(function(){
-      $('.editbtn').on('click',function(event){
-        $('#userViewModal').modal('show');
-        var id = $(this).data('id');
-        $.ajax({
-          url: "/manageAccount/"+id ,
-          type: 'GET',
-          dataType: 'json',
-        }).done(function(data){
-          $("#id").val("data.id");
-          $("#name").val("data.name");
-          $("#email").val("data.email");
-        });
+$('#editForm').on('submit',function(e){
+  e.preventDefault();
+     var id = $("#uid").val();
 
-        
-      });
-    });
-  </script>-->
+     $.ajax({
+      type: "PUT",
+      url: "/manageAccount/update/"+id,
+      data: $('#editForm').serialize(),
+      success:function(response){
+        console.log(reponse);
+        $('#userEditModal').modal('hide');
+        alert("data updated");
+        //location.reload();
+      },
+        error:function(error){
+          console.log(error);
+        }
 
+     });
+});
+}); 
+</script>
+
+
+  
+  
 
    
 
