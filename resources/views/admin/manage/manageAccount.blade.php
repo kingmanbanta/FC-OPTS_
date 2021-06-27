@@ -13,9 +13,7 @@
               </div>
           @endif
 
-      </div>
-
-      
+        </div>
       <div class="col-lg-12 text-right">
               <div class="card">
                 <div class="card-header">
@@ -24,6 +22,7 @@
                   <i class="fa fa-user-plus">Create User</i>
                   </a>
                 </div>
+                
 
    
               
@@ -43,7 +42,7 @@
                       </thead>
                       <tbody>
                           @foreach($users as $users)
-                          <tr id ="uid"role="row">
+                          <tr role="row">
                           <td class="class_id">{{$users->id}}</td>
                           <td class="class_name">{{$users->name}}</td>
                           <td class="class_email">{{$users->email}}</td>  
@@ -54,7 +53,7 @@
                           <td>  
                                 <a href="#" class="btn btn-secondary btn-sm viewbtn"><i class="fa fa-info"></i></a>
                                 <a href="#" class="btn btn-primary btn-sm editbtn"><i class="fa fa-edit"></i></a>
-                                <a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm deletebtn"><i class="fa fa-trash"></i></a>
                           </td>
                         </tr>
                        @endforeach
@@ -72,7 +71,9 @@
 
 @include('admin.manage.create')
 @include('admin.manage.edit')  
-@include('admin.manage.view')            
+@include('admin.manage.view')
+@include('admin.manage.delete')
+
 @endsection
 
 

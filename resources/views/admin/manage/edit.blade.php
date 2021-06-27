@@ -23,16 +23,23 @@
               <label >Email</label>
                 <input type="email" name="uemail" id="uemail" class="form-control">
             </div>
+            <div class="form-group">
+              <label >Password</label>
+                <input type="password" name="upassword" id="upassword" class="form-control">
+            </div>
             <div class="form-group">    
-                  <label for="urole">Current Role:</label>
+                  <label for="urole_id">Current Role:</label>
                   <input id="urole" type="text" class="form-control " name="urole" readonly>       
                       </div>
             <div class="form-group">    
-                  <label for="nurole">Update To:</label>
-                            <select id="role_id" name="role_id"  class="form-control">
-                              @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->display_name}}</option>
-                              @endforeach
+                  <label for="urole">Update To:</label>
+                            <select id="urole_id" name="urole_id"  class="form-control">
+                                <option value="" >Choose your Role</option>-->
+                                <option value="1">Administrator</option>
+                                <option value="2">Validator</option>
+                                <option value="3">Processor</option>
+                                <option value="4">Approver</option>
+                                <option value="5">Requestor</option>
                             </select>
                       </div>
                 
@@ -62,6 +69,7 @@
         $('#uid').val(data[0]);
         $('#uname').val(data[1]);
         $('#uemail').val(data[2]);
+        $('#upassword').val(data[3]);
         $('#urole').val(data[4]);
       });
     });
@@ -71,18 +79,21 @@
 $().ready(function(){
   
 $('#editForm').on('submit',function(e){
+  
   e.preventDefault();
      var id = $("#uid").val();
 
      $.ajax({
-      type: "PUT",
-      url: "/manageAccount/update/"+id,
+      type: "PATCH",
+      url: "manageAccount/update/"+id,
       data: $('#editForm').serialize(),
       success:function(response){
-        console.log(reponse);
+        console.log(response);
         $('#userEditModal').modal('hide');
-        alert("data updated");
-        //location.reload();
+        //alert("data updated");
+        swal("Good job!", "Data have been Updated!", "success").then(function(){
+        location.reload();
+        });
       },
         error:function(error){
           console.log(error);

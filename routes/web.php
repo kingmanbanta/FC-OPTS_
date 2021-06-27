@@ -31,7 +31,9 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
     Route::get('/manageAccount/create', [App\Http\Controllers\AdminController::class, 'create'])->name('create');
     Route::post('/manageAccount/create/save', [App\Http\Controllers\AdminController::class, 'createSave'])->name('createSave');
     //Route::get('/manageAccount/edit/{id}', [App\Http\Controllers\AdminController::class, 'getUserById'])->name('view');
-    Route::put('/manageAccount/update/{id}', [App\Http\Controllers\AdminController::class, 'update']);
+    Route::patch('/manageAccount/update/{id}', [App\Http\Controllers\AdminController::class, 'update']);
+    Route::delete('/manageAccount/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete']);
+
 
 });
 Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function(){

@@ -71,22 +71,38 @@ class AdminController extends Controller
     
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        /*$this->validate($request,[
             'uname' => ['required', 'string', 'max:255'],
             'uemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'upassword' => ['required', 'string', 'min:8', 'confirmed'],
               
-        ]);
+        ]);*/
         $users = User::find($id);
         $users->name = $request->input('uname');
         $users->email = $request->input('uemail');
         $users->password =Hash::make($request['upassword']);
+        if(!empty($request->urole_id)){
+            $users->roles()->sync($request->urole_id);
+        }else{
+            
+        }
+        
         $users->save();
+        
+        
+       
 
     
         //return response()->json($users);
                         
     }
+    public function delete($id)
+    {
+        $users = User::find($id);
+        $users->delete();
+        return $users;
+    }
+    
       
 
     
