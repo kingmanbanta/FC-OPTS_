@@ -77,7 +77,6 @@
 
 <script type="text/javascript">
 $().ready(function(){
-  
 $('#editForm').on('submit',function(e){
   
   e.preventDefault();
@@ -103,28 +102,3 @@ $('#editForm').on('submit',function(e){
 });
 }); 
 </script>
-
-
-  
-  
-
-   
-
-
-
-                                      
-             
-                                      
-                                      
-
-
-
-
-
-
-
-
-
-
-
-

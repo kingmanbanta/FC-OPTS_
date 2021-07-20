@@ -37,22 +37,26 @@ class AdminController extends Controller
     }
 
     public function createSave(Request $request){
-        $this->validate($request,[
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-              
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
-        $users= new User;
-        $users->name = $request->input('name');
-        $users->email = $request->input('email');
-        $users->password =Hash::make($request['password']);
-        
-         
-        $users->save();
-        $users->attachRole($request->role_id);
-        return redirect()->route('manageAccount') 
-                            ->with('success','Data have been saved!');
+        if ($validator->fails())
+        {
+            return Response::json(['errors' => $validator->errors()]);
+        }
+        else{
+            $users= new User;
+            $users->name = $request->input('name');
+            $users->email = $request->input('email');
+            $users->password =Hash::make($request['password']);
+            $users->save();
+            $users->attachRole($request->role_id);
+            return Response::json(['success' => '1']);
+        }
+       
+    
        }
 
 

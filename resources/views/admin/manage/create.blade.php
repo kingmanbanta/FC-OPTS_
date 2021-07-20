@@ -8,42 +8,41 @@
         <h5 id="exampleModalLabel" class="modal-title">Create Account</h5>
           <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
       </div>
-      <form method="POST" action="{{ route('createSave') }}" >
+      <form id="createForm" >
         {{csrf_field()}}
         <div class="modal-body">
           <div class="form-group">
             <label>Name</label>
-              <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"placeholder="name" required autocomplete="name" autofocus>
-              @error('name')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
+            <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Full name">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <span class="text-danger">
+                                <strong id="name-error"></strong>
+                            </span>
+             
           </div>
           
             <div class="form-group">
             <label>Email</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"placeholder="email" required autocomplete="email">
-              @error('email')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
+            <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            <span class="text-danger">
+                                <strong id="email-error"></strong>
+                            </span>
             </div>
 
                 <div class="form-group">
                   <label for="" class="">{{ __('Password') }}</label>     
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                      @error('password')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
+                  <input type="password" name="password" class="form-control" placeholder="Password">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            <span class="text-danger">
+                                <strong id="password-error"></strong>
+                            </span>
                       </div>
                       <div class="form-group">
                   <label for="" class="">{{ __('confirm-Password') }}</label>     
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                      </div>
+                  <input type="password" name="password_confirmation" class="form-control" placeholder="Retype password">
+                            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                          </div>
 
                         <label for="role_id">Roles:</label>                                                            
                           <div class="mt-4">
@@ -55,12 +54,46 @@
                       </div>
                         <div class="modal-footer">
                           <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          <button type="submit" id="submitForm" class="btn btn-primary">Save changes</button>
                         </div>
         </div>                        
       </form>
     </div>
   </div>
 </div>
-                                            
+<script type="text/javascript">
+$().ready(function(){
+$('#createForm').on('submit',function(e){
+  
+  e.preventDefault();
+     $.ajax({
+      type: "POST",
+      url: "manageAccount/create/save/",
+      data: $('#createForm').serialize(),
+      success:function(data){
+        console.log(data);
+        if(data.errors) {
+            if(data.errors.name){
+              $( '#name-error' ).html( data.errors.name[0] );
+              }
+            if(data.errors.email){
+              $( '#email-error' ).html( data.errors.email[0] );
+              }
+            if(data.errors.password){
+              $( '#password-error' ).html( data.errors.password[0] );
+              }
+              }
+        if(data.success) {
+            $('#userEditModal').modal('hide');
+            //alert("data updated");
+            swal("Good job!", "Data have been Saved!", "success").then(function(){
+            location.reload();
+            });
+              }
+            },
+
+     });
+});
+}); 
+</script>                                     
                                         
