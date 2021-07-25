@@ -84,9 +84,12 @@ class AdminController extends Controller
         $users = User::find($id);
         $users->name = $request->input('uname');
         $users->email = $request->input('uemail');
-        $users->password =Hash::make($request['upassword']);
+        //$users->password =Hash::make($request['upassword']);
         if(!empty($request->urole_id)){
             $users->roles()->sync($request->urole_id);
+        }
+        if(!empty($request->newpassword)){
+            $users->password =Hash::make($request['newpassword']);
         }else{
             
         }

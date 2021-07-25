@@ -54,14 +54,16 @@
             <h2 class="h5">{{ Auth::user()->name }}</h2><span>{{ Auth::user()->email }}</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
-          <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>F</strong><strong class="text-primary">C</strong></a></div>
+          <div class="sidenav-header-logo"><a href="{{ route('adminDash') }}" class="brand-small text-center"> <strong>F</strong><strong class="text-primary">C</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
           <h5 class="sidenav-heading">Main</h5>
-          <ul id="side-main-menu" class="side-menu list-unstyled">                  
-            <li><a href="{{ route('adminDash') }}"  > <i class="fa fa-home"></i>Home</a></li>
-            <li><a href="{{ route('manageAccount') }}"> <i class="fa fa-home"></i>Manage Account</a></li>
+          <ul id="side-main-menu" class="side-menu list-unstyled">
+            @if (Auth::user()->hasRole('Administrator'))
+            <li class="{{'admin/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('adminDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
+            <li class="{{'admin/manageAccount'== request()->path() ?  'active': ''}}"><a href="{{ route('manageAccount') }}"> <i class="fa fa-users"></i>manageAccount</a></li>
+            @endif
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
               <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                 <li><a href="#">Page</a></li>
@@ -81,7 +83,7 @@
         <nav class="navbar">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
-              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="fa fa-bars"> </i></a><a href="index.html" class="navbar-brand">
+              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="fa fa-bars"> </i></a><a href="{{ route('adminDash') }}" class="navbar-brand">
                   <div class="brand-text d-none d-md-inline-block"><span>OPTS</span><strong class="text-primary">Dashboard</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications dropdown-->
@@ -133,15 +135,25 @@
                 </li>
                 <!-- Languages dropdown    -->
 
-                <!-- Log out-->
-                <li class="nav-item"><a href="{{ route('logout') }}" 
-                class="nav-link logout" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                <!-- Log out
+                <li class="nav-item" id="logout">
+                  <a href="{{ route('logout') }}" class="nav-link logout" onclick="event.preventDefault(); 
+                  document.getElementById('logout-form').submit();">
                  <span class="d-none d-sm-inline-block">Logout</span>
-                 <i class="fa fa-sign-out"></i></a>
+                 <i class="fa fa-sign-out"></i>
+                </a>
                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                  @csrf
+                 </form>
+                 </li>-->
+                
+                 <li class="nav-item" id="logout">
+                 <a href="#" class="nav-link logout">
+                 <span class="d-none d-sm-inline-block" >Logout</span><i class="fa fa-sign-out"></i>
+                 </a>
+                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+                 </form>
                  </li>
                 
               </ul>
@@ -178,9 +190,23 @@
     <!-- Main File-->
     <script src="{{ asset('vendor/js/front.js') }}"></script>
     <!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>-->
-    
-    
-
-
+  <script>
+    $("#logout").on("click", function() {
+    swal({
+    title: 'Log Out?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'OK',
+    closeOnConfirm: true,
+    closeOnCancel: true
+   }).then((result) => { 
+      if (result.value===true) { 
+         $('#logout-form').submit() // this submits the form 
+      } 
+   }) 
+})   
+  </script>
   </body>
 </html>

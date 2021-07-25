@@ -14,6 +14,7 @@
           @endif
 
         </div>
+</div>       
       <div class="col-lg-12 text-right">
               <div class="card">
                 <div class="card-header">
@@ -42,7 +43,7 @@
                       </thead>
                       <tbody>
                           @foreach($users as $users)
-                          <tr role="row">
+                          <input type="hidden" id="delete_id" name="delete_id" value="{{$users->id}}"/>
                           <td class="class_id">{{$users->id}}</td>
                           <td class="class_name">{{$users->name}}</td>
                           <td class="class_email">{{$users->email}}</td>  

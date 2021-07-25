@@ -13,4 +13,10 @@ class ProcessorController extends Controller
     public function index(){
         return view('user.processor.dashboard');
     }
+    public function profile(){
+        //$users = User::find('id')->paginate(1);
+        //$roles = Role::all();
+        //return view('admin.manage.manageAccount',compact('users'),compact('roles'));
+        return view('user.requestor.profile');
+    }
 }

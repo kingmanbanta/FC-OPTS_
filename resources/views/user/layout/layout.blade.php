@@ -23,13 +23,22 @@
     <link rel="stylesheet" href="{{ asset('css/fontastic.css') }}">
     <!-- Google fonts - Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <!-- jQuery Circle
-    <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">-->
+    <!-- jQuery Circle-->
+    <link rel="stylesheet" href="{{ asset('css/grasp_mobile_progress_circle-1.0.0.min.css') }}">
     <!-- Custom Scrollbar-->
     <link rel="stylesheet" href="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
-  
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+    
     <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
   </head>
   <body>
@@ -48,8 +57,24 @@
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
           <h5 class="sidenav-heading">Main</h5>
-          <ul id="side-main-menu" class="side-menu list-unstyled">                  
-            <li><a href=""> <i class="fa fa-home"></i>Home</a></li>
+          <ul id="side-main-menu" class="side-menu list-unstyled">  
+            
+            @if (Auth::user()->hasRole('Processor'))
+            <li class="{{'processor/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('processorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
+            <li class="{{'processor/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('pProfile') }}"> <i class="fa fa-user"></i>My Profile</a></li>
+            @endif
+            @if (Auth::user()->hasRole('Validator'))
+            <li class="{{'validator/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('validatorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
+            <li class="{{'validator/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('vProfile') }}"> <i class="fa fa-user"></i>My Profile</a></li>
+            @endif
+            @if (Auth::user()->hasRole('Approver'))                
+            <li class="{{'approver/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('approverDash') }}"> <i class="fa fa-home"></i>Home</a></li>
+            <li class="{{'approver/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('aProfile') }}"> <i class="fa fa-user"></i>PMy rofile</a></li>
+            @endif
+            @if (Auth::user()->hasRole('Requestor'))
+            <li class="{{'requestor/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('requestorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
+            <li class="{{'requestor/profile'== request()->path() ?  'active': ''}}"><a  href="{{ route('rProfile') }}"> <i class="fa fa-user"></i>My Profile</a></li>
+            @endif
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
               <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                 <li><a href="#">Page</a></li>
@@ -122,7 +147,7 @@
                 <!-- Languages dropdown    -->
 
                 <!-- Log out-->
-                <li class="nav-item"><a href="{{ route('logout') }}" 
+                <!--<li class="nav-item"><a href="{{ route('logout') }}" 
                 class="nav-link logout" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                  <span class="d-none d-sm-inline-block">Logout</span>
@@ -130,6 +155,14 @@
                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                 </li>-->
+                 <li class="nav-item" id="logout">
+                 <a  href="#" class="nav-link logout">
+                 <span class="d-none d-sm-inline-block" >Logout</span><i class="fa fa-sign-out"></i>
+                 </a>
+                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+                 </form>
                  </li>
                 
               </ul>
@@ -137,9 +170,11 @@
           </div>
         </nav>
       </header>
+      
               
       @yield('content')
 
+  
       <footer class="main-footer">
         <div class="container-fluid">
           <div class="row">
@@ -165,5 +200,24 @@
     <script src="{{ asset('vendor/js/charts-home.js') }}"></script>
     <!-- Main File-->
     <script src="{{ asset('vendor/js/front.js') }}"></script>
+    <script>
+    $("#logout").on("click", function() {
+    swal({
+    title: 'Log Out?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'OK',
+    closeOnConfirm: true,
+    closeOnCancel: true
+    }).then((result) => { 
+        if (result.value===true) { 
+          $('#logout-form').submit() // this submits the form 
+        } 
+    }) 
+  })   
+  </script>
+
   </body>
 </html>

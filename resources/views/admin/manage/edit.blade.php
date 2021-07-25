@@ -25,7 +25,11 @@
             </div>
             <div class="form-group">
               <label >Password</label>
-                <input type="password" name="upassword" id="upassword" class="form-control">
+                <input type="password" name="upassword" id="upassword" class="form-control"readonly>
+            </div>
+            <div class="form-group">
+              <label >new-Password</label>
+                <input type="password" name="newpassword" id="newpassword" class="form-control">
             </div>
             <div class="form-group">    
                   <label for="urole_id">Current Role:</label>
@@ -81,24 +85,36 @@ $('#editForm').on('submit',function(e){
   
   e.preventDefault();
      var id = $("#uid").val();
-
-     $.ajax({
-      type: "PATCH",
-      url: "manageAccount/update/"+id,
-      data: $('#editForm').serialize(),
-      success:function(response){
-        console.log(response);
-        $('#userEditModal').modal('hide');
-        //alert("data updated");
-        swal("Good job!", "Data have been Updated!", "success").then(function(){
-        location.reload();
+     swal({
+      title: 'Save Changes?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK',
+      closeOnConfirm: true,
+      closeOnCancel: true
+    }).then((result) => { 
+        if (result.value===true) { 
+          //$('#logout-form').submit() // this submits the form 
+          $.ajax({
+          type: "PATCH",
+          url: "manageAccount/update/"+id,
+          data: $('#editForm').serialize(),
+          success:function(response){
+            console.log(response);
+            $('#userEditModal').modal('hide');
+            //alert("data updated");
+            swal("Good job!", "Data have been Updated!", "success").then(function(){
+            location.reload();
+            });
+          }
         });
-      },
-        error:function(error){
-          console.log(error);
-        }
 
-     });
+        } 
+    }) 
+
+    
 });
 }); 
 </script>
