@@ -29,15 +29,18 @@
     <link rel="stylesheet" href="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset('css/style.default.css') }}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{{ asset('plugins/ijaboCropTool/ijaboCropTool.min.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="{{ asset('plugins/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
     
     <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
   </head>
@@ -48,7 +51,7 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img src="{{ asset('img/forbeslogo.png') }}" alt="person" class="img-fluid rounded-circle">
+          <div class="sidenav-header-inner text-center profile_pic"><img src="{{ Auth::user()->picture }}" alt="person" class="img-fluid rounded-circle profile_pic">
             <h2 class="h5">{{ Auth::user()->name }}</h2><span>{{ Auth::user()->email }}</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
@@ -69,7 +72,7 @@
             @endif
             @if (Auth::user()->hasRole('Approver'))                
             <li class="{{'approver/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('approverDash') }}"> <i class="fa fa-home"></i>Home</a></li>
-            <li class="{{'approver/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('aProfile') }}"> <i class="fa fa-user"></i>PMy rofile</a></li>
+            <li class="{{'approver/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('aProfile') }}"> <i class="fa fa-user"></i>My rofile</a></li>
             @endif
             @if (Auth::user()->hasRole('Requestor'))
             <li class="{{'requestor/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('requestorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
@@ -127,7 +130,7 @@
                 <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope"></i><span class="badge badge-info">10</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
                     <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
-                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle profile_pic"></div>
                         <div class="msg-body">
                           <h3 class="h5">Jason Doe</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
                         </div></a></li>
@@ -198,8 +201,10 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('vendor/js/charts-home.js') }}"></script>
+    
     <!-- Main File-->
     <script src="{{ asset('vendor/js/front.js') }}"></script>
+
     <script>
     $("#logout").on("click", function() {
     swal({

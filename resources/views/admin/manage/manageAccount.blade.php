@@ -7,12 +7,6 @@
             <li class="breadcrumb-item">Home</li>
             <li class="breadcrumb-item ">Manage Users </li>
           </ul>
-          @if($message = Session::get('success'))
-              <div class="alert alert-success">
-                  <p>{{ $message }}</p>
-              </div>
-          @endif
-
         </div>
 </div>       
       <div class="col-lg-12 text-right">
@@ -42,8 +36,9 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <tr>
                           @foreach($users as $users)
-                          <input type="hidden" id="delete_id" name="delete_id" value="{{$users->id}}"/>
+                          <input type="hidden" id="delete_id" name="delete_id" />
                           <td class="class_id">{{$users->id}}</td>
                           <td class="class_name">{{$users->name}}</td>
                           <td class="class_email">{{$users->email}}</td>  

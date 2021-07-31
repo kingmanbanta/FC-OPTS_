@@ -3,6 +3,15 @@
 <script type="text/javascript">
     $().ready(function(){
       $('.deletebtn').on('click',function(e){
+        $tr = $(this).closest('tr');
+        
+        var data = $tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#delete_id').val(data[0]);
         e.preventDefault();
         var id = $("#delete_id").val();
         //alert(id);

@@ -15,6 +15,14 @@
       </div>
     </div>
   </div>-->
+  <div class="breadcrumb-holder">
+        <div class="container-fluid">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item ">Users Profile</li>
+          </ul>
+        </div>
+      </div>
 
   <div class="col">
     <div class="row">
@@ -27,7 +35,7 @@
                   <div class="mx-auto" style="width: 140px;">
                     <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
                   
-                    <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;"> <img src="{{ asset('img/forbeslogo.png') }}" alt="person" class="img-fluid rounded-circle">  </span>
+                    <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;"> <img src="{{ Auth::user()->picture }}" alt="person" class="img-fluid rounded-circle profile_pic">  </span>
                      
                     </div>
                   </div>
@@ -38,10 +46,11 @@
                     <p class="mb-0">{{ Auth::user()->email }}</p>
                     <div class="text-muted"><small>Last seen 2 hours ago</small></div>
                     <div class="mt-2">
-                      <button class="btn btn-primary" type="button">
+                      <input type="file" name="profile_pic" id="profile_pic" style="opacity: 0;height:1px;display:none">
+                      <a href="#" class="btn btn-primary" id="change_pro_pic">
                         <i class="fa fa-fw fa-camera"></i>
                         <span>Change Photo</span>
-                      </button>
+                      </a>
                     </div>
                   </div>
                   <div class="text-center text-sm-right">
@@ -51,25 +60,27 @@
                 </div>
               </div>
               <ul class="nav nav-tabs">
-                <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Profile</a>
+              </li>
               </ul>
               
               <div class="tab-content pt-3">
-                <div class="tab-pane active">
+                <div class="tab-pane active" id="tabs-1" role="tabpanel">
                   <form class="form" novalidate="">
                     <div class="row">
                       <div class="col">
                         <div class="row">
-                          <div class="col">
+                          <div class="col-4">
                             <div class="form-group">
                               <label>Name</label>
-                              <input class="form-control" type="text" name="name" placeholder="" >
+                              <p>kingbanta</p>
                             </div>
                           </div>
-                          <div class="col">
+                          <div class="col-4">
                             <div class="form-group">
-                              <label>Username</label>
-                              <input class="form-control" type="text" name="username" placeholder="">
+                              <label>Role</label>
+                              <input class="form-control" type="text" name="username" placeholder="Banta">
                             </div>
                           </div>
                         </div>
@@ -141,11 +152,11 @@
                         </div>
                       </div>-->
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                       <div class="col d-flex justify-content-end">
                         <button class="btn btn-primary" type="submit">Save Changes</button>
                       </div>
-                    </div>
+                    </div>-->
                   </form>
 
                 </div>
@@ -186,6 +197,37 @@ body{
 </style>
 
 <script type="text/javascript">
+    $(document).on('click','#change_pro_pic', function(){
+      $('#profile_pic').click();
+    });
+
+    $('#profile_pic').ijaboCropTool({
+          preview : '.profile_pic',
+          setRatio:1,
+          allowedExtensions: ['jpg', 'jpeg','png'],
+          buttonsText:['CROP','QUIT'],
+          buttonsColor:['#30bf7d','#ee5155', -15],
+          @if (Auth::user()->hasRole('Processor'))
+          processUrl:'{{ route("pchangeProfilePic") }}',  
+          @endif
+          @if (Auth::user()->hasRole('Requestor'))
+          processUrl:'{{ route("rchangeProfilePic") }}',  
+          @endif
+          @if (Auth::user()->hasRole('Approver'))
+          processUrl:'{{ route("achangeProfilePic") }}',  
+          @endif
+          @if (Auth::user()->hasRole('Validator'))
+          processUrl:'{{ route("vchangeProfilePic") }}',  
+          @endif
+          
+          withCSRF:['_token','{{ csrf_token() }}'],
+          onSuccess:function(message, element, status){
+             alert(message);
+          },
+          onError:function(message, element, status){
+            alert(message);
+          }
+        });
 
 </script>
 

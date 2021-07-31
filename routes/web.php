@@ -38,19 +38,23 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
 });
 Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function(){
     Route::get('dashboard', [App\Http\Controllers\ProcessorController::class, 'index'])->name('processorDash');    
-    Route::get('/profile', [App\Http\Controllers\ProcessorController::class, 'profile'])->name('pProfile');  
+    Route::get('/profile', [App\Http\Controllers\ProcessorController::class, 'profile'])->name('pProfile');
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ProcessorController::class, 'changeProfilePic'])->name('pchangeProfilePic');  
 });
 Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function(){
     Route::get('dashboard', [App\Http\Controllers\ValidatorController::class, 'index'])->name('validatorDash');    
-    Route::get('/profile', [App\Http\Controllers\ValidatorController::class, 'profile'])->name('vProfile');  
+    Route::get('/profile', [App\Http\Controllers\ValidatorController::class, 'profile'])->name('vProfile');
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ValidatorController::class, 'changeProfilePic'])->name('vchangeProfilePic');  
 });
 Route::group(['prefix'=>'approver/','middleware' =>['role:Approver']],function(){
     Route::get('dashboard', [App\Http\Controllers\ApproverController::class, 'index'])->name('approverDash');
-    Route::get('/profile', [App\Http\Controllers\ApproverController::class, 'profile'])->name('aProfile');      
+    Route::get('/profile', [App\Http\Controllers\ApproverController::class, 'profile'])->name('aProfile');
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ApproverController::class, 'changeProfilePic'])->name('achangeProfilePic');      
 });
 Route::group(['prefix'=>'requestor/','middleware' =>['role:Requestor']],function(){
     Route::get('dashboard', [App\Http\Controllers\RequestorController::class, 'index'])->name('requestorDash');
-    Route::get('/profile', [App\Http\Controllers\RequestorController::class, 'profile'])->name('rProfile');    
+    Route::get('/profile', [App\Http\Controllers\RequestorController::class, 'profile'])->name('rProfile');
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\RequestorController::class, 'changeProfilePic'])->name('rchangeProfilePic');    
 });
 
 

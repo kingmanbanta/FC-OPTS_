@@ -47,9 +47,20 @@ class AdminController extends Controller
             return Response::json(['errors' => $validator->errors()]);
         }
         else{
+            $path = 'user/';
+            $fontPath = public_path('fonts/osaka-re.ttf');
+            $char = strtoupper($request->name[0]);
+            $newAvatarName = rand(12,34353).time().'_avatar.png';
+            $dest= $path.$newAvatarName;
+
+            $createAvatar = makeAvatar($fontPath,$dest,$char);
+            $picture = $createAvatar == true ? $newAvatarName : '';
+
+            
             $users= new User;
             $users->name = $request->input('name');
             $users->email = $request->input('email');
+            $users->picture =  $picture;
             $users->password =Hash::make($request['password']);
             $users->save();
             $users->attachRole($request->role_id);
