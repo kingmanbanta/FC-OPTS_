@@ -23,10 +23,12 @@ class ApproverController extends Controller
         return view('user.approver.dashboard');
     }
     public function profile(){
-        $users = User::all();
-        $roles = Role::all();
-        //return view('admin.manage.manageAccount',compact('users'),compact('roles'));
-        return view('user.layout.profile',compact('users'),compact('roles'));
+        $user = User::join('role_user', 'users.id', '=', 'role_user.user_id')
+                    ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                    ->select('roles.display_name','roles.id')
+                    ->where('roles.display_name', '=', 'Approver')
+                    ->first();
+        return view('user.layout.profile',compact('user'));
     }
     public function changeProfilePic(Request $request)
     {
@@ -54,5 +56,25 @@ class ApproverController extends Controller
                 return response()->json(['status'=>1,'msg'=>'your profile picture have been updated succesfully']);
             }
         }
+    }
+    public function update(Request $request, $id)
+    {
+        /*$this->validate($request,[
+            'uname' => ['required', 'string', 'max:255'],
+            'uemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'upassword' => ['required', 'string', 'min:8', 'confirmed'],
+              
+        ]);*/
+        $users = User::find($id);
+        $users->name = $request->input('upname');
+        $users->email = $request->input('upemail');
+        //$users->password =Hash::make($request['upassword']);
+        
+        if(!empty($request->uppassword)){
+            $users->password =Hash::make($request['uppassword']);
+        }else{
+            
+        }
+        $users->save();
     }
 }

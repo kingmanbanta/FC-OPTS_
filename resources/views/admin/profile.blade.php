@@ -1,4 +1,4 @@
-@extends('user.layout.layout')
+@extends('admin.layout')
 
 @section('content')
 
@@ -19,7 +19,7 @@
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">Home</li>
-            <li class="breadcrumb-item"><a href="#">Users Profile</a></li>
+            <li class="breadcrumb-item">Users Profile</li>
           </ul>
         </div>
       </div>

@@ -106,11 +106,6 @@ class AdminController extends Controller
         }
         
         $users->save();
-        
-        
-       
-
-    
         //return response()->json($users);
                         
     }
@@ -119,6 +114,14 @@ class AdminController extends Controller
         $users = User::find($id);
         $users->delete();
         return $users;
+    }
+    public function profile(){
+        $user = User::join('role_user', 'users.id', '=', 'role_user.user_id')
+                    ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                    ->select('roles.display_name','roles.id')
+                    ->where('roles.display_name', '=', 'Administrator')
+                    ->first();
+        return view('admin.profile',compact('user'));
     }
     
       

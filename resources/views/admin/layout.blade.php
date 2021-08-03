@@ -50,7 +50,7 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img src="{{ asset('img/forbeslogo.png') }}" alt="person" class="img-fluid rounded-circle">
+          <div class="sidenav-header-inner text-center"><img src="{{ Auth::user()->picture }}" alt="person" class="img-fluid rounded-circle">
             <h2 class="h5">{{ Auth::user()->name }}</h2><span>{{ Auth::user()->email }}</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
@@ -61,7 +61,8 @@
           <h5 class="sidenav-heading">Main</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">
             @if (Auth::user()->hasRole('Administrator'))
-            <li class="{{'admin/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('adminDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
+            <li class="{{'admin/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('adminDash') }}"> <i class="fa fa-home"></i>Home</a></li>
+            <li class="{{'admin/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('adminProfile') }}"> <i class="fa fa-user"></i>Admin Profile</a></li>                
             <li class="{{'admin/manageAccount'== request()->path() ?  'active': ''}}"><a href="{{ route('manageAccount') }}"> <i class="fa fa-users"></i>manageAccount</a></li>
             @endif
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>

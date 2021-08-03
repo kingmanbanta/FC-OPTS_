@@ -33,6 +33,8 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
     //Route::get('/manageAccount/edit/{id}', [App\Http\Controllers\AdminController::class, 'getUserById'])->name('view');
     Route::patch('/manageAccount/update/{id}', [App\Http\Controllers\AdminController::class, 'update']);
     Route::delete('/manageAccount/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete']);
+    Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('adminProfile');
+    
 
 
 });
@@ -44,7 +46,8 @@ Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function
 Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function(){
     Route::get('dashboard', [App\Http\Controllers\ValidatorController::class, 'index'])->name('validatorDash');    
     Route::get('/profile', [App\Http\Controllers\ValidatorController::class, 'profile'])->name('vProfile');
-    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ValidatorController::class, 'changeProfilePic'])->name('vchangeProfilePic');  
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ValidatorController::class, 'changeProfilePic'])->name('vchangeProfilePic');
+    Route::patch('/profile/update/{id}', [App\Http\Controllers\ValidatorController::class, 'update']);  
 });
 Route::group(['prefix'=>'approver/','middleware' =>['role:Approver']],function(){
     Route::get('dashboard', [App\Http\Controllers\ApproverController::class, 'index'])->name('approverDash');

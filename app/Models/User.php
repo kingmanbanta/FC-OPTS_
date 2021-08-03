@@ -51,4 +51,5 @@ class User extends Authenticatable
             return asset('user/no-pic.png');
         }
     }
+    
 }
