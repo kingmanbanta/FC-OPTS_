@@ -63,7 +63,8 @@
             @if (Auth::user()->hasRole('Administrator'))
             <li class="{{'admin/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('adminDash') }}"> <i class="fa fa-home"></i>Home</a></li>
             <li class="{{'admin/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('adminProfile') }}"> <i class="fa fa-user"></i>Admin Profile</a></li>                
-            <li class="{{'admin/manageAccount'== request()->path() ?  'active': ''}}"><a href="{{ route('manageAccount') }}"> <i class="fa fa-users"></i>manageAccount</a></li>
+            <li class="{{'admin/manageAccount'== request()->path() ?  'active': ''}}"><a href="{{ route('manageAccount') }}"> <i class="fa fa-users"></i>Manage Account</a></li>
+            <li class="{{'admin/buildingdepartment'== request()->path() ?  'active': ''}}"><a href="{{ route('buildingdepartment') }}"> <i class="fa fa-university"></i>Buildings and Departments</a></li>
             @endif
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
               <ul id="exampledropdownDropdown" class="collapse list-unstyled ">

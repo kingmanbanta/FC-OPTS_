@@ -30,10 +30,21 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
     Route::get('/manageAccount', [App\Http\Controllers\AdminController::class, 'manageAccount'])->name('manageAccount');
     Route::get('/manageAccount/create', [App\Http\Controllers\AdminController::class, 'create'])->name('create');
     Route::post('/manageAccount/create/save', [App\Http\Controllers\AdminController::class, 'createSave'])->name('createSave');
+    
+    Route::get('/buildingdepartment', [App\Http\Controllers\AdminController::class, 'building_department'])->name('buildingdepartment');
+    Route::post('/department/add/save', [App\Http\Controllers\AdminController::class, 'addDepartmentSave']);
+    Route::post('/building/add/save', [App\Http\Controllers\AdminController::class, 'addBuildingSave']);
+    Route::patch('/department/update/{id}', [App\Http\Controllers\AdminController::class, 'dept_update']);
+    Route::delete('/department/delete/{id}', [App\Http\Controllers\AdminController::class, 'dept_delete']);
+
+    Route::patch('/building/update/{id}', [App\Http\Controllers\AdminController::class, 'build_update']);
+    Route::delete('/building/delete/{id}', [App\Http\Controllers\AdminController::class, 'build_delete']);
+    
     //Route::get('/manageAccount/edit/{id}', [App\Http\Controllers\AdminController::class, 'getUserById'])->name('view');
     Route::patch('/manageAccount/update/{id}', [App\Http\Controllers\AdminController::class, 'update']);
     Route::delete('/manageAccount/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete']);
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('adminProfile');
+    Route::patch('/profile/update/{id}', [App\Http\Controllers\AdminController::class, 'admin_profile_update']);
     
 
 
@@ -41,7 +52,8 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
 Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function(){
     Route::get('dashboard', [App\Http\Controllers\ProcessorController::class, 'index'])->name('processorDash');    
     Route::get('/profile', [App\Http\Controllers\ProcessorController::class, 'profile'])->name('pProfile');
-    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ProcessorController::class, 'changeProfilePic'])->name('pchangeProfilePic');  
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ProcessorController::class, 'changeProfilePic'])->name('pchangeProfilePic');
+    Route::patch('/profile/update/{id}', [App\Http\Controllers\ProcessorController::class, 'update']);  
 });
 Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function(){
     Route::get('dashboard', [App\Http\Controllers\ValidatorController::class, 'index'])->name('validatorDash');    
@@ -52,12 +64,14 @@ Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function
 Route::group(['prefix'=>'approver/','middleware' =>['role:Approver']],function(){
     Route::get('dashboard', [App\Http\Controllers\ApproverController::class, 'index'])->name('approverDash');
     Route::get('/profile', [App\Http\Controllers\ApproverController::class, 'profile'])->name('aProfile');
-    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ApproverController::class, 'changeProfilePic'])->name('achangeProfilePic');      
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\ApproverController::class, 'changeProfilePic'])->name('achangeProfilePic');
+    Route::patch('/profile/update/{id}', [App\Http\Controllers\ApproverController::class, 'update']);      
 });
 Route::group(['prefix'=>'requestor/','middleware' =>['role:Requestor']],function(){
     Route::get('dashboard', [App\Http\Controllers\RequestorController::class, 'index'])->name('requestorDash');
     Route::get('/profile', [App\Http\Controllers\RequestorController::class, 'profile'])->name('rProfile');
-    Route::post('/profile/changeProfilePic', [App\Http\Controllers\RequestorController::class, 'changeProfilePic'])->name('rchangeProfilePic');    
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\RequestorController::class, 'changeProfilePic'])->name('rchangeProfilePic');
+    Route::patch('/profile/update/{id}', [App\Http\Controllers\RequestorController::class, 'update']);    
 });
 
 

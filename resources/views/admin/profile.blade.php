@@ -15,11 +15,11 @@
       </div>
     </div>
   </div>-->
-  <div class="breadcrumb-holder">
-        <div class="container-fluid">
+  <div class="">
+              <div class="col-lg-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">Home</li>
-            <li class="breadcrumb-item">Users Profile</li>
+            <li class="breadcrumb-item"><a href="#">Users Profile</a></li>
           </ul>
         </div>
       </div>

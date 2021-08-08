@@ -84,7 +84,7 @@ $('#createForm').on('submit',function(e){
               }
               }
         if(data.success) {
-            $('#userEditModal').modal('hide');
+            $('#myModal').modal('hide');
             //alert("data updated");
             swal("Good job!", "Data have been Saved!", "success").then(function(){
             location.reload();

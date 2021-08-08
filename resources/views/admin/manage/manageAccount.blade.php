@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="breadcrumb-holder">
-        <div class="container-fluid">
+<div class="">
+          <div class="col-lg-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">Home</li>
-            <li class="breadcrumb-item ">Manage Users </li>
+            <li class="breadcrumb-item "><a href="#">Manage Users</a></li>
           </ul>
         </div>
 </div>       

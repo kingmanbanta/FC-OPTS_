@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Building;
+use App\Models\Department;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,85 @@ class AdminController extends Controller
         $roles = Role::all();
         return view('admin.manage.manageAccount',compact('users'),compact('roles'));
     }
+    public function building_department(){
+        $building = Building::all();
+        $department = Department::all();
+        return view('admin.building_department.managebuildingdepartment',compact('department','building'));
+    }
+
+    public function addDepartmentSave(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|unique:departments',
+            'dept_name' => 'required|max:255',
+            'build_id' => 'required|max:255',            
+        ]);
+        if ($validator->fails())
+        {
+            return Response::json(['errors' => $validator->errors()]);
+        }
+        else{
+            $department= new Department;
+            $department->id = $request->input('id');
+            $department->Dept_name = $request->input('dept_name');
+            $department->building_id = $request->input('build_id');    
+            
+            $department->save();
+            return Response::json(['success' => '1']);
+        }
+       
+    
+       }
+       public function addBuildingSave(Request $request){
+        $validator = Validator::make($request->all(), [
+            'build_name' => 'required|max:255',
+            'address' => 'required|max:255',            
+        ]);
+        if ($validator->fails())
+        {
+            return Response::json(['errors' => $validator->errors()]);
+        }
+        else{
+            $building= new Building;
+            $building->Building_name = $request->input('build_name');
+            $building->Address = $request->input('address');
+            
+            $building->save();
+            return Response::json(['success' => '1']);
+        }
+       
+       }
+       public function dept_update(Request $request, $id)
+    {
+        $department = Department::find($id);
+        $department->id = $request->input('dept_edit_idd');
+        //$department->id->sync($request->dept_edit_id);
+        $department->Dept_name = $request->input('dept_edit_name');
+        
+        $department->save();                
+    }
+
+    public function dept_delete($id)
+    {
+        $department = Department::find($id);
+        $department->delete();
+        //return $users;
+    }
+    public function build_delete($id)
+    {
+        $department = Building::find($id);
+        $department->delete();
+        //return $users;
+    }
+    public function build_update(Request $request, $id)
+    {
+        $building = Building::find($id);
+        $building->Building_name = $request->input('build_edit_name');
+        //$department->id->sync($request->dept_edit_id);
+        $building->Address = $request->input('build_edit_add');
+        
+        $building->save();                
+    }
+
 
     public function create(){
         $roles = Role::all();
@@ -121,7 +202,28 @@ class AdminController extends Controller
                     ->select('roles.display_name','roles.id')
                     ->where('roles.display_name', '=', 'Administrator')
                     ->first();
-        return view('admin.profile',compact('user'));
+                    $department=Department::all();
+        return view('admin.profile',compact('user','department'));
+    }
+    public function admin_profile_update(Request $request, $id)
+    {
+        /*$this->validate($request,[
+            'uname' => ['required', 'string', 'max:255'],
+            'uemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'upassword' => ['required', 'string', 'min:8', 'confirmed'],
+              
+        ]);*/
+        $users = User::find($id);
+        $users->name = $request->input('upname');
+        $users->email = $request->input('upemail');
+        //$users->password =Hash::make($request['upassword']);
+        
+        if(!empty($request->uppassword)){
+            $users->password =Hash::make($request['uppassword']);
+        }else{
+            
+        }
+        $users->save();
     }
     
       

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Staff;
+use App\Models\Department;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,8 @@ class RequestorController extends Controller
         ->select('roles.display_name','roles.id')
         ->where('roles.display_name', '=', 'Requestor')
         ->first();
-return view('user.layout.profile',compact('user'));
+        $department=Department::all();
+        return view('user.layout.profile',compact('user','department'));
     }
     public function changeProfilePic(Request $request)
     {
@@ -59,22 +62,6 @@ return view('user.layout.profile',compact('user'));
     }
     public function update(Request $request, $id)
     {
-        /*$this->validate($request,[
-            'uname' => ['required', 'string', 'max:255'],
-            'uemail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'upassword' => ['required', 'string', 'min:8', 'confirmed'],
-              
-        ]);*/
-        $users = User::find($id);
-        $users->name = $request->input('upname');
-        $users->email = $request->input('upemail');
-        //$users->password =Hash::make($request['upassword']);
         
-        if(!empty($request->uppassword)){
-            $users->password =Hash::make($request['uppassword']);
-        }else{
-            
-        }
-        $users->save();
     }
 }

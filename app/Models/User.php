@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use HasFactory, Notifiable;
+    //use Roles;
 
     /**
      * The attributes that are mass assignable.
@@ -50,6 +52,9 @@ class User extends Authenticatable
         }else{
             return asset('user/no-pic.png');
         }
+    }
+    public function staff(){
+        return $this->hasOne(Staff::class);
     }
     
 }
