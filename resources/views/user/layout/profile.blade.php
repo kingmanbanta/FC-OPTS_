@@ -64,8 +64,14 @@
               </div>
               <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Profile</a>
-              </li> 
+                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><i class="fa fa-user">Profile</i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link updatebtn" data-toggle="tab" href="#tabs-2" role=""><i class="fa fa-pencil-square-o">Change Profile</i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link updatepasswordbtn" data-toggle="tab" href="#tabs-3" role="tab"><i class="fa fa-key">Change Password</i></a>
+              </li>  
               </ul>
               
               <div class="tab-content pt-3">
@@ -74,30 +80,94 @@
                     <div class="row">
                       <div class="col">
                         <div class="row">
-                          <div class="col-4">
+                          <div class="col-6">
                             <div class="form-group">
                               <label>Name</label>
-                              <input class="form-control" type="text" name="upname" id="upname" value="{{Auth::user()->name}}" placeholder="{{Auth::user()->name}}" readonly>
+                              <input class="form-control" type="text" name="upname" id="upname" value="{{Auth::user()->name}}"  readonly>
                             </div>
                           </div>
-                          <div class="col-4">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label>Middle Name</label>
+                              @if(empty($userr->mname))
+                              <input class="form-control" type="text" name="up_mname" id="up_mname" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_mname" id="up_mname" placeholder="{{$userr->mname}}" readonly>
+                              @endif
+                            </div>
+                          </div>
+                          </div>
+                          <div class="row">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              @if(empty($userr->lname))
+                              <input class="form-control" type="text" name="up_lname" id="up_lname" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_lname" id="up_lname" placeholder="{{$userr->lname}}" readonly>
+                              @endif                            
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label>sex</label>
+                              @if(empty($userr->sex))
+                              <input class="form-control" type="text" name="up_sex" id="up_sex" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_sex" id="up_sex" placeholder="{{$userr->sex}}" readonly>
+                              @endif
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-6">
                             <div class="form-group">
                               <label>Role</label>
-                              <input class="form-control" type="text" name="" placeholder="{{$user->display_name}}" readonly>
+                              <input class="form-control" type="text" name="up_role" id="up_role" placeholder="{{$user->display_name}}" readonly>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                              <label>Contact No.</label>
+                              @if(empty($userr->Contact_no))
+                              <input class="form-control" type="text" name="up_contact" id="up_contact" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_contact" id="up_contact" placeholder="{{$userr->Contact_no}}" readonly>
+                              @endif
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col">
                             <div class="form-group">
+                              <label>Department</label>
+                              @if(empty($userr->Dept_name))
+                              <input class="form-control" type="text" name="up_build_id" id="up_build_id" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_build_id" id="up_build_id" placeholder="{{$userr->Dept_name}}" readonly>
+                              @endif
+                            </div>
+                          </div>
+                          </div>
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                              <label>Address</label>
+                              @if(empty($userr->Address))
+                              <input class="form-control" type="text" name="up_address" id="up_address" placeholder="" readonly>
+                              @else
+                              <input class="form-control" type="text" name="up_address" id="up_address" placeholder="{{$userr->Address}}" readonly>
+                              @endif
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
                               <label>Email</label>
-                              <input class="form-control" type="text" name="" placeholder="{{Auth::user()->email}}" readonly>
+                              <input class="form-control" type="email" name="up_email" id="up_email" placeholder="{{Auth::user()->email}}" readonly>
                             </div>
                           </div>
                         </div>
-                        
-                      </div>
-                    </div>
+                    
                     
                   </form>
 
@@ -175,5 +245,6 @@ body{
 
 
 @include('user.layout.update') 
+@include('user.layout.update_password')
 
 @endsection

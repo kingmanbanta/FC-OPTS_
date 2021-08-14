@@ -11,6 +11,9 @@ class Department extends Model
     public function building(){
         return $this->belongsTo(Building::class);
     }
+    public function staff(){
+        return $this->belongsTo(Staff::class);
+    }
     
 
 }

@@ -16,33 +16,52 @@
      <div class="row">
                       <div class="col">
                         <div class="row">
-                          <div class="col-5">
+                          <div class="col-4">
                             <div class="form-group">
                               <label>First Name</label>
-                              <input class="form-control" type="text" name="up_fname" id="up_fname" value="{{Auth::user()->name}}" placeholder="{{Auth::user()->name}}">
+                              <input class="form-control" type="text" name="up_fname" id="up_fname" value="{{Auth::user()->name}}" >
                             </div>
                           </div>
                           <div class="col-3">
                             <div class="form-group">
                               <label>Middle Name</label>
-                              <input class="form-control" type="text" name="up_mname" name="up_mname" placeholder="Enter Middlename" >
+                              @if(empty($userr->mname))
+                              <input class="form-control" type="text" name="up_mname" id="up_mname" placeholder="" >
+                              @else
+                              <input class="form-control" type="text" name="up_mname" id="up_mname" value="{{$userr->mname}}" >
+                              @endif
                             </div>
                           </div>
                           <div class="col-3">
                             <div class="form-group">
                               <label>Last Name</label>
-                              <input class="form-control" type="text" name="up_lname" name="up_lname" placeholder="Enter Lastname" >
+                              @if(empty($userr->lname))
+                              <input class="form-control" type="text" name="up_lname" id="up_lname" placeholder="" >
+                              @else
+                              <input class="form-control" type="text" name="up_lname" id="up_lname" value="{{$userr->lname}}" >
+                              @endif
                             </div>
                           </div>
-                          <div class="col-1">
+                          <div class="col-2">
                             <div class="form-group">
                               <label>Sex</label>
-                              <select name="up_sex" class="form-control">
-                                  <option value=""></option>
-                                  <option value="Female">F</option>
-                                  <option value="Male">M</option>
+                              @if(empty($userr->sex))
+                              <select name="up_sex" id="up_sex" class="form-control">
+                              <option value="" disabled selected hidden>select</option>
+                                  <option value="Female">Female</option>
+                                  <option value="Male">Male</option>
                                   <option value="other">Other</option>
                               </select>
+                              @else
+                              <select name="up_sex" id="up_sex" class="form-control">
+                                  <option value="{{$userr->sex}}" hidden>{{$userr->sex}}</option>
+                                  <option value="Female">Female</option>
+                                  <option value="Male">Male</option>
+                                  <option value="other">Other</option>
+                              </optgroup>
+                              </select>
+                              @endif
+                              
                             </div>
                           </div>
                         </div>
@@ -56,7 +75,11 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Contact No.</label>
-                              <input class="form-control" type="text" name="up_contact" id="up_contact" placeholder="enter no." >
+                              @if(empty($userr->Contact_no))
+                              <input class="form-control" type="text" name="up_contact" id="up_contact" placeholder="">
+                              @else
+                              <input class="form-control" type="text" name="up_contact" id="up_contact" value="{{$userr->Contact_no}}" >
+                              @endif
                             </div>
                           </div>
                         </div>
@@ -64,35 +87,52 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Address</label>
-                              <input class="form-control" type="text" name="up_address" id="up_address" placeholder="Bry.Municipality,Province">
+                              @if(empty($userr->Address))
+                              <input class="form-control" type="text" name="up_address" id="up_address" placeholder="" >
+                              @else
+                              <input class="form-control" type="text" name="up_address" id="up_address" value="{{$userr->Address}}" >
+                              @endif
                             </div>
                           </div>
                           <div class="col">
                             <div class="form-group">
                               <label>Department</label>
-                              <select name="up_dept_id" class="form-control">
-                              <option value=""></option>
+                              @if(empty($userr->Dept_name))
+                              <select name="up_dept_id" id="up_dept_id" class="form-control">
+                              <option value="" disabled selected hidden>select</option>
                                   @foreach($department as $departments)
                                   <option value="{{$departments->id}}">{{$departments->Dept_name}}</option>
                                   @endforeach
                               </select>
+                              @else
+                              <select name="up_dept_id" id="up_dept_id" class="form-control" >
+                                  <option value="{{$userr->id}}" hidden>{{$userr->Dept_name}}</option>
+                                  @foreach($department as $departments)
+                                  <option value="{{$departments->id}}">{{$departments->Dept_name}}</option>
+                                  @endforeach
+                              </select>
+                              @endif
+                              
                             </div>
                           </div>
                         </div>
-                        <div class="row">
+                        <!--<div class="row">
                           <div class="col">
                             <div class="form-group">
-                              <label>Confirm-Password</label>
-                              <input class="form-control" type="password" name="up_password" id="up_password" placeholder="Enter old password">
+                              <label>New Password</label>
+                              <input class="form-control" type="password" name="new_up_password" id="new_up_password" placeholder="Enter old password">
                             </div>
                           </div>
                           <div class="col">
                             <div class="form-group">
-                              <label>New-Password</label>
-                              <input class="form-control" type="password" name="new_up_password" id="new_up_password" placeholder="Enter new password">
+                              <label>Confirm Password</label>
+                              <input type="password" name="password_confirmation" class="form-control" placeholder="Retype password">
+                              <span class="text-danger">
+                                <strong id="new_up_password-error"></strong>
+                              </span>
                             </div>
                           </div>
-                        </div>
+                        </div>-->
 
               <div class="modal-footer">
               <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
@@ -111,6 +151,8 @@
 <script type="text/javascript">
     $().ready(function(){
       $('.updatebtn').on('click',function(){
+        //var contact = $(this).attr('Contact_no');
+        //$('#up_contact').val(contact);  
         $('#userUpdateModal').modal('show');
         
       });
@@ -139,14 +181,24 @@ $('#updateForm').on('submit',function(e){
           type: "PATCH",
           url: "profile/update/"+id,
           data: $('#updateForm').serialize(),
-          success:function(response){
-            console.log(response);
+          success:function(data){
+        console.log(data);
+        if(data.errors) {
+            if(data.errors.email){
+              $( '#email-error' ).html( data.errors.email[0] );
+              }
+            if(data.errors.new_up_password){
+              $( '#new_up_password-error' ).html( data.errors.new_up_password[0] );
+              }
+              }
+        if(data.success) {
             $('#userUpdateModal').modal('hide');
             //alert("data updated");
-            swal("Good job!", "Data have been Updated!", "success").then(function(){
+            swal("Good job!", "Data have been Saved!", "success").then(function(){
             location.reload();
             });
-          }
+              }
+            },
         });
 
         } 

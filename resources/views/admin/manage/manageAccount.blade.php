@@ -17,9 +17,6 @@
                   <i class="fa fa-user-plus">Create User</i>
                   </a>
                 </div>
-                
-
-   
               
         
         <div class="row" >
