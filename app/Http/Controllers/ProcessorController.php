@@ -145,4 +145,7 @@ class ProcessorController extends Controller
 
         }
     }
+    public function supplieritems(){
+        return view('user.processor.supplieritems');
+    }
 }

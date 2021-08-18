@@ -65,6 +65,7 @@
             @if (Auth::user()->hasRole('Processor'))
             <li class="{{'processor/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('processorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
             <li class="{{'processor/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('pProfile') }}"> <i class="fa fa-user"></i>My Profile</a></li>
+            <li class="{{'processor/supplieritems'== request()->path() ?  'active': ''}}"><a href="{{ route('supplieritems') }}"> <i class="fa fa-user"></i>Suppliers and Items</a></li>
             @endif
             @if (Auth::user()->hasRole('Validator'))
             <li class="{{'validator/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('validatorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
