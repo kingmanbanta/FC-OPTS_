@@ -222,7 +222,7 @@ class AdminController extends Controller
                     ->where('staff.id', '=', $id)
                     ->first();
                     $department=Department::all();            
-                    return view('user.layout.profile',compact('user','userr','department'));
+                    return view('admin.profile',compact('user','userr','department'));
     }
     public function admin_profile_update(Request $request, $id)
     {
@@ -292,6 +292,33 @@ class AdminController extends Controller
             $users->save();
             return Response::json(['success' => '1']);
 
+        }
+    }
+    public function changeProfilePic(Request $request)
+    {
+        $path ='user/';
+        $file =$request->file('profile_pic');
+        $new_name ='UIMG_'.date('Ymd').uniqid().'.jpg';
+        
+        $upload = $file->move(public_path($path), $new_name);
+
+        if( !$upload){
+            return response()->json(['status'=>0,'msg'=>'something went wrong, upload new picture failed']);
+        }else{
+            $oldPicture = User::find(Auth::user()->id)->getAttributes()['picture'];
+            if($oldPicture !=''){
+                if(\File::exists(public_path($path.$oldPicture))){
+                    \File::delete(public_path($path.$oldPicture));
+                }
+            }
+
+            $update = User::find(Auth::user()->id)->update(['picture'=>$new_name]);
+
+            if(!$upload){
+                return response()->json(['status'=>0,'msg'=>'something went wrong,updating picture in db failed']);
+            }else{
+                return response()->json(['status'=>1,'msg'=>'your profile picture have been updated succesfully']);
+            }
         }
     }
 }

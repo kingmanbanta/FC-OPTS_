@@ -73,6 +73,7 @@
             @if (Auth::user()->hasRole('Approver'))                
             <li class="{{'approver/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('approverDash') }}"> <i class="fa fa-home"></i>Home</a></li>
             <li class="{{'approver/profile'== request()->path() ?  'active': ''}}"><a href="{{ route('aProfile') }}"> <i class="fa fa-user"></i>My Profile</a></li>
+            <li class="{{'approver/purchaserequest'== request()->path() ?  'active': ''}}"><a href="{{ route('PurchaseRequest') }}"> <i class="fa fa-user"></i>PR</a></li>            
             @endif
             @if (Auth::user()->hasRole('Requestor'))
             <li class="{{'requestor/dashboard'== request()->path() ?  'active': ''}}"><a href="{{ route('requestorDash') }}"> <i class="fa fa-home"></i>Home</a></li>                
@@ -204,6 +205,7 @@
     
     <!-- Main File-->
     <script src="{{ asset('vendor/js/front.js') }}"></script>
+    
 
     <script>
     $("#logout").on("click", function() {

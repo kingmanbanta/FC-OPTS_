@@ -145,4 +145,8 @@ class ApproverController extends Controller
 
         }
     }
+    public function purchaseRequest(){
+        //return view('user.pr.purchase_request');
+        return view('user.pr.pr');
+    }
 }

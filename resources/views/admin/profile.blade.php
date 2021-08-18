@@ -219,18 +219,7 @@ body{
           allowedExtensions: ['jpg', 'jpeg','png'],
           buttonsText:['CROP','QUIT'],
           buttonsColor:['#30bf7d','#ee5155', -15],
-          @if (Auth::user()->hasRole('Processor'))
-          processUrl:'{{ route("pchangeProfilePic") }}',  
-          @endif
-          @if (Auth::user()->hasRole('Requestor'))
-          processUrl:'{{ route("rchangeProfilePic") }}',  
-          @endif
-          @if (Auth::user()->hasRole('Approver'))
-          processUrl:'{{ route("achangeProfilePic") }}',  
-          @endif
-          @if (Auth::user()->hasRole('Validator'))
-          processUrl:'{{ route("vchangeProfilePic") }}',  
-          @endif
+          processUrl:'{{ route("adminProfilePic") }}',  
           
           withCSRF:['_token','{{ csrf_token() }}'],
           onSuccess:function(message, element, status){

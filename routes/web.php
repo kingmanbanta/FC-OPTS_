@@ -45,7 +45,7 @@ Route::group(['prefix'=>'admin/','middleware' =>['role:Administrator']],function
     Route::delete('/manageAccount/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete']);
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('adminProfile');
     Route::patch('/profile/update/{id}', [App\Http\Controllers\AdminController::class, 'admin_profile_update']);
-    
+    Route::post('/profile/changeProfilePic', [App\Http\Controllers\AdminController::class, 'changeProfilePic'])->name('adminProfilePic');
     Route::patch('/profile/update/password/{id}', [App\Http\Controllers\AdminController::class, 'update_pasword']);
 
 
@@ -69,7 +69,8 @@ Route::group(['prefix'=>'approver/','middleware' =>['role:Approver']],function()
     Route::get('/profile', [App\Http\Controllers\ApproverController::class, 'profile'])->name('aProfile');
     Route::post('/profile/changeProfilePic', [App\Http\Controllers\ApproverController::class, 'changeProfilePic'])->name('achangeProfilePic');
     Route::patch('/profile/update/{id}', [App\Http\Controllers\ApproverController::class, 'update']);
-    Route::patch('/profile/update/password/{id}', [App\Http\Controllers\ApproverController::class, 'update_pasword']);      
+    Route::patch('/profile/update/password/{id}', [App\Http\Controllers\ApproverController::class, 'update_pasword']);
+    Route::get('/purchaserequest', [App\Http\Controllers\ApproverController::class, 'purchaseRequest'])->name('PurchaseRequest');      
 });
 Route::group(['prefix'=>'requestor/','middleware' =>['role:Requestor']],function(){
     Route::get('dashboard', [App\Http\Controllers\RequestorController::class, 'index'])->name('requestorDash');
