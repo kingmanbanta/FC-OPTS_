@@ -1,13 +1,14 @@
 @extends('user.layout.layout')
 
 @section('content')
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <br>
 <div class="col">
 <div class="card h-100">
 	<div class="card-body">
 		<div class="row gutters">
+        <div class="col-sm-8"><h2>Supplier <b>Details</b></h2></div>
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mb-2 text-primary">Supplier Details</h6>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
@@ -43,22 +44,22 @@
 		<div class="row gutters">
 			
 			<div class="container-lg">
-   
+            
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-8"><h2>Item <b>Details</b></h2></div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New</button>
                     </div>
                 </div>
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Phone</th>
+                        <th>Item Desc</th>
+                        <th>Brand</th>
+                        <th>Unit</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -77,8 +78,9 @@
             </table>
         </div>
     </div>
-</div>     
-		</div>
+    </div>
+	
+        <br>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
@@ -88,7 +90,7 @@
 			</div>
 		</div>
 	</div>
-
+    </div>
 </div>
 <style>
 body {
@@ -115,8 +117,8 @@ body {
     font-size: 12px;
     text-shadow: none;
     min-width: 100px;
-    border-radius: 50px;
     line-height: 13px;
+    
 }
 .table-title .add-new i {
     margin-right: 4px;
