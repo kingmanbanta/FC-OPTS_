@@ -17,7 +17,7 @@ class CreatePurchaserequestsTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('purpose');
-            $table->string('date_request');
+            $table->date('date_request');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('department_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             

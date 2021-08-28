@@ -2,42 +2,47 @@
 
 @section('content')
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="{{ asset('css/supplieritems.css') }}" rel="stylesheet">
 <br>
 <div class="col">
 <div class="card h-100">
+
 	<div class="card-body">
+    <form id="supplieritemForm">
+    {{csrf_field()}}
 		<div class="row gutters">
         <div class="col-sm-8"><h2>Supplier <b>Details</b></h2></div>
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			</div>
+            
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="fullName">Business Name</label>
-					<input type="text" class="form-control" id="fullName" placeholder="Enter full name">
+					<input type="text" class="form-control" id="business_name" name="business_name" placeholder="Enter Business Name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="eMail">Contact Person</label>
-					<input type="text" class="form-control" id="eMail" placeholder="contact person">
+					<input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Contact Person">
 				</div>
 			</div>
 			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 				<div class="form-group">
 					<label for="phone">Phone</label>
-					<input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+					<input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
 				</div>
 			</div>
 			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 				<div class="form-group">
 					<label for="website">Email</label>
-					<input type="email" class="form-control" id="website" placeholder="Email">
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email">
 				</div>
 			</div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 				<div class="form-group">
 					<label for="website">Business Address</label>
-					<input type="url" class="form-control" id="website" placeholder="Business Address">
+					<input type="text" class="form-control" id="business_address" name="business_address" placeholder="Business Address">
 				</div>
 			</div>
 		</div>
@@ -60,20 +65,12 @@
                         <th>Item Desc</th>
                         <th>Brand</th>
                         <th>Unit</th>
+                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>John Doe</td>
-                        <td>Administration</td>
-                        <td>(171) 555-2222</td>
-                        <td>
-                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>      
+                        
                 </tbody>
             </table>
         </div>
@@ -84,91 +81,15 @@
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
-					<button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-					<button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
+        </form>
 	</div>
     </div>
 </div>
-<style>
-body {
-    color: #404E67;
-    background: #F5F7FA;
-    font-family: 'Open Sans', sans-serif;
-}
-.table-wrapper {
-   
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-.table-title {
-    padding-bottom: 10px;
-    margin: 0 0 10px;
-}
-.table-title h2 {
-    margin: 6px 0 0;
-    font-size: 22px;
-}
-.table-title .add-new {
-    float: right;
-    height: 30px;
-    font-weight: bold;
-    font-size: 12px;
-    text-shadow: none;
-    min-width: 100px;
-    line-height: 13px;
-    
-}
-.table-title .add-new i {
-    margin-right: 4px;
-}
-table.table {
-    table-layout: fixed;
-}
-table.table tr th, table.table tr td {
-    border-color: #e9e9e9;
-}
-table.table th i {
-    font-size: 13px;
-    margin: 0 5px;
-    cursor: pointer;
-}
-table.table th:last-child {
-    width: 100px;
-}
-table.table td a {
-    cursor: pointer;
-    display: inline-block;
-    margin: 0 5px;
-    min-width: 24px;
-}    
-table.table td a.add {
-    color: #27C46B;
-}
-table.table td a.edit {
-    color: #FFC107;
-}
-table.table td a.delete {
-    color: #E34724;
-}
-table.table td i {
-    font-size: 19px;
-}
-table.table td a.add i {
-    font-size: 24px;
-    margin-right: -1px;
-    position: relative;
-    top: 3px;
-}    
 
-table.table .form-control.error {
-    border-color: #f50000;
-}
-table.table td .add {
-    display: none;
-}
-</style>
 <script>
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -178,10 +99,16 @@ $(document).ready(function(){
 		$(this).attr("disabled", "disabled");
 		var index = $("table tbody tr:last-child").index();
         var row = '<tr>' +
-            '<td><input type="text" class="form-control" name="name" id="name"></td>' +
-            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
-            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
-			'<td>' + actions + '</td>' +
+            '<input type="hidden" class="form-control" name="item_no[]" id="item_no">' +
+            '<td><input type="text" class="form-control" name="item_desc[]" id="item_desc"></td>' +
+            '<td><input type="text" class="form-control" name="brand[]" id="brand"></td>' +
+            '<td><input type="text" class="form-control" name="unit[]" id="unit"></td>' +
+            '<td><input type="text" class="form-control" name="price[]" id="price"></td>' +
+			'<td>' +
+            '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>'+
+            '<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>'+
+            '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> '+
+            '</td>' +
         '</tr>';
     	$("table").append(row);		
 		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
@@ -221,6 +148,55 @@ $(document).ready(function(){
         $(this).parents("tr").remove();
 		$(".add-new").removeAttr("disabled");
     });
+    
 });
+</script>
+<script type="text/javascript">
+$().ready(function(){
+    //var formdata = $('#supplieritemForm').serializeArray();
+    //var dataa = JSON.stringify(formdata);
+    //console.log(dataa);
+    $('#supplieritemForm').on('submit',function(e){
+        e.preventDefault();
+     swal({
+      title: 'Save Changes?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK',
+      closeOnConfirm: true,
+      closeOnCancel: true
+    }).then((result) => { 
+        if (result.value===true) { 
+          //$('#logout-form').submit() // this submits the form 
+          /*$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });*/
+          $.ajax({
+          type: "POST",
+          url: "supplieritems/save",
+          data: $('#supplieritemForm').serialize(),
+          //data:{data : dataa},
+          dataType:"json",
+          success:function(response){
+            console.log(JSON.stringify(response));
+            //$('#userEditModal').modal('hide');
+            //alert("data updated");
+            swal("Good job!", "Data have been Updated!", "success").then(function(){
+            location.reload();
+            });
+          }
+        });
+
+        } 
+    }) 
+
+    
+});
+
+}); 
 </script>
 @endsection

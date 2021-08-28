@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Department;
 use App\Models\Staff;
+use App\Models\Supplier;
+use App\Models\Item;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -148,4 +150,60 @@ class ProcessorController extends Controller
     public function supplieritems(){
         return view('user.processor.supplieritems');
     }
+    public function supplieritemsSave(Request $request){
+        
+        $rules = [];
+        foreach($request->input('item_no') as $key => $value) {
+            $rules["item_desc.{$key}"] = 'required';
+            $rules["brand.{$key}"] = 'required';
+            $rules["unit.{$key}"] = 'required';
+            
+            $data=json_decode($rules, true);
+        }
+        
+       $validator = Validator::make($request->all(), $data,[
+            /*'business_name' => 'required',
+            'contact_person' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'business_address' => 'required',
+            'item_desc' => 'required',
+            'brand' => 'required',
+            'unit'  => 'required',*/
+        ]);
+        if ($validator->fails())
+        {
+            return Response::json(['errors' => $validator->errors()]);
+        }else{
+            
+            foreach($request->input('item_no') as $key => $value) {
+
+                $item = new Item;
+                $item->item_Desc = $request->get('item_desc')[$key];
+                $item->item_Brand = $request->get('brand')[$key];
+                $item->item_Unit = $request->get('unit')[$key];
+                $item->save();
+            }
+
+        /*$supplier = new Supplier;
+        $supplier->business_Name = $request->input('business_name');
+        $supplier->contact_Person = $request->input('contact_person');
+        $supplier->contact_No = $request->input('phone');
+        $supplier->email = $request->input('email');
+        $supplier->business_add = $request->input('business_address');
+        *
+                
+            $item = new Item;
+            $item->save($datasave);
+            
+        }*/
+    }   
+            
+        //$supplier->save();
+        //$supplier->attach($item);
+        //return Response::json(['success' => '1']);
+       
+    
+
+}
 }

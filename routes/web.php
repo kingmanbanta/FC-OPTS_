@@ -54,9 +54,9 @@ Route::group(['prefix'=>'processor/','middleware' =>['role:Processor']],function
     Route::get('dashboard', [App\Http\Controllers\ProcessorController::class, 'index'])->name('processorDash');    
     Route::get('/profile', [App\Http\Controllers\ProcessorController::class, 'profile'])->name('pProfile');
     Route::post('/profile/changeProfilePic', [App\Http\Controllers\ProcessorController::class, 'changeProfilePic'])->name('pchangeProfilePic');
-    Route::patch('/profile/update/{id}', [App\Http\Controllers\ProcessorController::class, 'update']);
     Route::patch('/profile/update/password/{id}', [App\Http\Controllers\ProcessorController::class, 'update_pasword']);  
     Route::get('/supplieritems', [App\Http\Controllers\ProcessorController::class, 'supplieritems'])->name('supplieritems');
+    Route::post('/supplieritems/save', [App\Http\Controllers\ProcessorController::class, 'supplieritemsSave'])->name('supplieritemsSave');
 });
 Route::group(['prefix'=>'validator/','middleware' =>['role:Validator']],function(){
     Route::get('dashboard', [App\Http\Controllers\ValidatorController::class, 'index'])->name('validatorDash');    
